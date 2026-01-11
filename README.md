@@ -2,26 +2,20 @@
 A Flask REST API for tracking superheroes and their superpowers. This API allows you to manage superheroes, their powers, and associations between them with full CRUD operations, validation, and error handling.
 
 ## Features
-##### Hero Management
-    Track superheroes with their secret and public identities
+### Core Features
+- **Hero Management** - Track superheroes with their secret and public identities
+- **Power Management** - Manage superpowers with detailed descriptions
+- **Hero-Power Associations** - Link heroes to powers with customizable strength levels
+- **Full CRUD Operations** - Create, read, update, and delete functionality
+- **Data Validation** - Comprehensive validation for all inputs
+- **Error Handling** - Proper HTTP status codes and error messages
+- **RESTful Design** - Clean, predictable API endpoints
 
-##### Power Management 
-    Manage superpowers with detailed descriptions
-
-##### Hero-Power Associations 
-    Link heroes to powers with customizable strength levels
-
-##### Full CRUD Operations 
-    Create, read, update, and delete functionality
-
-##### Data Validation
-    Comprehensive validation for all inputs
-
-##### Error Handling 
-    Proper HTTP status codes and error messages
-
-##### RESTful Design 
-    Clean, predictable API endpoints
+### Email Notifications
+- **Test Email** - Verify email functionality is working
+- **Power Update Notifications** - Send email alerts when powers are updated
+- **Welcome Emails** - Send welcome messages when new heroes are added
+- **HTML & Plain Text** - Beautiful HTML emails with plain text fallbacks
 
 ## Tech Stack
 Backend: Python, Flask
@@ -92,7 +86,21 @@ curl -X PATCH http://localhost:5555/powers/1 \
 curl -X POST http://localhost:5555/hero_powers \
   -H "Content-Type: application/json" \
   -d '{"strength": "Average", "power_id": 1, "hero_id": 3}'
-Using Postman
+
+### Send test email
+curl -X POST http://localhost:5555/send-test-email \
+  -H "Content-Type: application/json" \
+  -d '{"to": "recipient@example.com"}'
+
+### Send power update notification
+curl -X POST http://localhost:5555/notify-power-update \
+  -H "Content-Type: application/json" \
+  -d '{"power_id": 1, "email": "recipient@example.com"}'
+
+### Send welcome email to new hero
+curl -X POST http://localhost:5555/welcome-hero \
+  -H "Content-Type: application/json" \
+  -d '{"hero_name": "Spider-Man", "super_name": "Peter Parker", "email": "hero@example.com"}'
 Import the provided Postman collection: challenge-2-superheroes.postman_collection.json
 
 Set the base URL to http://localhost:5555
@@ -120,7 +128,7 @@ Random associations between heroes and powers
 Resetting the Database
 bash
 ### Delete the database file
-rm superheroes.db
+rm instance/superheroes.db
 
 ### Recreate and seed
 python seed.py
@@ -167,17 +175,25 @@ Environment Variables
 Create a .env file in the root directory:
 
 env
-DATABASE_URL=sqlite:///superheroes.db
+DATABASE_URL=sqlite:///instance/superheroes.db
 FLASK_APP=app
 FLASK_ENV=development
 SECRET_KEY=your-secret-key-here
+
+# Email Configuration (Optional)
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USE_TLS=True
+MAIL_USE_SSL=False
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
 Troubleshooting
 Common Issues
 "No such table" error
 
 bash
 ### Delete and recreate the database
-rm superheroes.db
+rm instance/superheroes.db
 python seed.py
 Port already in use
 
@@ -199,10 +215,10 @@ Database connection issues
 
 bash
 ### Check if database file exists
-ls -la superheroes.db
+ls -la instance/superheroes.db
 
 ### Check file permissions
-chmod 644 superheroes.db
+chmod 644 instance/superheroes.db
 Debug Mode
 To enable debug mode, set FLASK_ENV=development in your .env file or run:
 
@@ -230,16 +246,5 @@ SQLAlchemy ORM
 
 All contributors and testers
 
-## Support
-For support, please:
-
-Check the troubleshooting section above
-
-Review the API documentation
-
-Create an issue in the GitHub repository
-
 ## Contact
-Project Maintainer: Kevin kiplangat
-Email: kiplangatkevin335@gmail.com
-GitHub: https://github.com/kevinkiplangat432
+GitHub: https://github.com/kenshar/phase_4_superheros.git
